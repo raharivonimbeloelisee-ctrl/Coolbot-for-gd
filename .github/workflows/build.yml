@@ -15,7 +15,7 @@ jobs:
           unzip -o AutoBot.zip
           cp -a gd-bot/. .
           rm -rf gd-bot
-          sed -i 's/"geode": "4.0.0"/"geode": "5.10.1"/; s/"android": "2.2074"/"android": "*"/' mod.json
+          sed -i 's/"geode": "4.0.0"/"geode": "5.11.1"/; s/"android": "2.2074"/"android": "*"/' mod.json
       - name: Installer le NDK 28
         run: |
           ls $ANDROID_HOME/ndk
