@@ -15,10 +15,13 @@ jobs:
           unzip -o AutoBot.zip
           cp -a gd-bot/. .
           rm -rf gd-bot
+          sed -i 's/"geode": "4.0.0"/"geode": "5.10.1"/; s/"android": "2.2074"/"android": "*"/' mod.json
+          cat mod.json
       - uses: geode-sdk/build-geode-mod@main
         with:
           combine: true
           target: ${{ matrix.target }}
+          sdk: latest
           android-ndk-version: 27.3.13750724
 
   package:
