@@ -16,6 +16,7 @@ jobs:
           cp -a gd-bot/. .
           rm -rf gd-bot
           sed -i 's/"geode": "4.0.0"/"geode": "5.11.2"/; s/"android": "2.2074"/"android": "*"/' mod.json
+          sed -i 's/void processCommands(float dt) {/void processCommands(float dt, bool isHalfTick, bool isLastTick) {/; s/GJBaseGameLayer::processCommands(dt);/GJBaseGameLayer::processCommands(dt, isHalfTick, isLastTick);/; s/G::enabled() \&\& m_player1/G::enabled() \&\& !isHalfTick \&\& m_player1/' src/main.cpp
       - uses: geode-sdk/build-geode-mod@main
         with:
           combine: true
