@@ -1,0 +1,32 @@
+name: Build AutoBot
+on: workflow_dispatch
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Android32, Android64]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dezipper le projet
+        run: |
+          unzip -o AutoBot.zip
+          cp -a gd-bot/. .
+          rm -rf gd-bot
+      - uses: geode-sdk/build-geode-mod@main
+        with:
+          combine: true
+          target: ${{ matrix.target }}
+
+  package:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: geode-sdk/build-geode-mod/combine@main
+        id: combine
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AutoBot
+          path: ${{ steps.combine.outputs.build-output }}
