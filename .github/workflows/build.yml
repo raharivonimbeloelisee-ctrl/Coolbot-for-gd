@@ -16,17 +16,11 @@ jobs:
           cp -a gd-bot/. .
           rm -rf gd-bot
           sed -i 's/"geode": "4.0.0"/"geode": "5.11.2"/; s/"android": "2.2074"/"android": "*"/' mod.json
-      - name: Installer le NDK 28
-        run: |
-          ls $ANDROID_HOME/ndk
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;28.2.13676358"
-          ls $ANDROID_HOME/ndk
       - uses: geode-sdk/build-geode-mod@main
         with:
           combine: true
           target: ${{ matrix.target }}
           sdk: latest
-          android-ndk-version: 28.2.13676358
 
   package:
     needs: [build]
