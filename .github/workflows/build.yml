@@ -7,7 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         target: [Android32, Android64]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Dezipper le projet
@@ -19,10 +19,11 @@ jobs:
         with:
           combine: true
           target: ${{ matrix.target }}
+          android-ndk-version: 27.3.13750724
 
   package:
     needs: [build]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: geode-sdk/build-geode-mod/combine@main
         id: combine
