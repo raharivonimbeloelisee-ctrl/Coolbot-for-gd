@@ -1,0 +1,39 @@
+name: Build MiniGames (Android)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Android32, Android64]
+    name: ${{ matrix.target }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Préparer le projet
+        run: |
+          unzip -q MiniGames.zip -d gd-minigames
+          cp -a gd-minigames/. .
+          rm -rf gd-minigames MiniGames.zip
+      - uses: geode-sdk/build-geode-mod@main
+        with:
+          combine: true
+          target: ${{ matrix.target }}
+          sdk: latest
+
+  package:
+    name: Package
+    runs-on: ubuntu-24.04
+    needs: [build]
+    steps:
+      - uses: geode-sdk/build-geode-mod/combine@main
+        id: combine
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MiniGames
+          path: ${{ steps.combine.outputs.build-output }}
