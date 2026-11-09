@@ -24,7 +24,7 @@ jobs:
         with:
           combine: true
           target: ${{ matrix.target }}
-          sdk: latest
+          sdk: 5.11.2
 
   package:
     name: Package
